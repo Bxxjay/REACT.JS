@@ -28,8 +28,8 @@ export default function Home() {
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <Example darkMode={darkMode} />
       <CursorMaskReveal
-  foregroundImage="/images/abhishek-ravi-qi2-ePRjgGw-unsplash.jpg"
-  backgroundImage="/images/wolfgang-hasselmann-lLemmyQyC_w-unsplash.jpg"
+  foregroundImage={`${import.meta.env.BASE_URL}images/abhishek-ravi-qi2-ePRjgGw-unsplash.jpg`}
+  backgroundImage={`${import.meta.env.BASE_URL}images/wolfgang-hasselmann-lLemmyQyC_w-unsplash.jpg`}
   overlayColor="rgba(0,0,0,0.6)"
   maskSize={350}
 />

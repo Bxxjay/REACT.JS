@@ -1,8 +1,10 @@
 import { useRef, useEffect } from "react";
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function CursorMaskReveal({
-  foregroundImage = "/images/foreground.jpg",
-  backgroundImage = "/images/background.jpg",
+  foregroundImage = `${BASE}images/foreground.jpg`,
+  backgroundImage = `${BASE}images/background.jpg`,
   overlayColor = "rgba(0,0,0,0.6)",
   maskSize = 200,
 }) {
@@ -45,32 +47,23 @@ export default function CursorMaskReveal({
         const { x, y } = posRef.current;
 
         ctx.clearRect(0, 0, w, h);
-
-        // Draw background image
         ctx.drawImage(bgImg.current, 0, 0, w, h);
 
-        // Offscreen canvas for foreground + overlay + hole
         const offscreen = document.createElement("canvas");
         offscreen.width = w;
         offscreen.height = h;
         const offCtx = offscreen.getContext("2d");
 
-        // Draw foreground
         offCtx.drawImage(fgImg.current, 0, 0, w, h);
-
-        // Draw overlay
         offCtx.fillStyle = overlayColor;
         offCtx.fillRect(0, 0, w, h);
 
-        // Punch circle hole
         offCtx.globalCompositeOperation = "destination-out";
         offCtx.beginPath();
         offCtx.arc(x, y, maskSize / 2, 0, Math.PI * 2);
         offCtx.fill();
 
-        // Draw onto main canvas
         ctx.drawImage(offscreen, 0, 0);
-
         animRef.current = requestAnimationFrame(draw);
       };
 

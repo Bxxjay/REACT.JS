@@ -1,13 +1,15 @@
 import { useEffect, useRef } from "react";
 
+const BASE = import.meta.env.BASE_URL;
+
 const images = [
-  "images/WhatsApp Image 2026-04-24 at 22.16.46 (1).jpeg",
-  "images/WhatsApp Image 2026-04-24 at 22.16.46.jpeg",
-  "images/WhatsApp Image 2026-04-24 at 22.16.50.jpeg",
-  "images/WhatsApp Image 2026-04-24 at 22.16.52.jpeg",
-  "images/WhatsApp Image 2026-04-24 at 22.16.53.jpeg",
-  "images/WhatsApp Image 2026-04-24 at 22.16.59.jpeg",
-  "images/WhatsApp Image 2026-04-24 at 22.17.13 (1).jpeg"
+  `${BASE}images/WhatsApp Image 2026-04-24 at 22.16.46 (1).jpeg`,
+  `${BASE}images/WhatsApp Image 2026-04-24 at 22.16.46.jpeg`,
+  `${BASE}images/WhatsApp Image 2026-04-24 at 22.16.50.jpeg`,
+  `${BASE}images/WhatsApp Image 2026-04-24 at 22.16.52.jpeg`,
+  `${BASE}images/WhatsApp Image 2026-04-24 at 22.16.53.jpeg`,
+  `${BASE}images/WhatsApp Image 2026-04-24 at 22.16.59.jpeg`,
+  `${BASE}images/WhatsApp Image 2026-04-24 at 22.17.13 (1).jpeg`,
 ];
 
 export default function CarouselSection({ darkMode }) {
