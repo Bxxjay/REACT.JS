@@ -1,0 +1,153 @@
+/* Wrapper */
+.wrapper {
+    width: 100%;
+    padding: 60px 40px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode */
+.light {
+    background-color: #f9f9f9;
+    color: #111111;
+}
+
+/* Dark mode */
+.dark {
+    background-color: black;
+    color: #ffffff;
+}
+
+/* Heading */
+.heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* Intro paragraph */
+.intro {
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 700px;
+    margin-bottom: 48px;
+    opacity: 0.75;
+    text-align: center;
+}
+
+/* Grid */
+.section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+/* Card */
+.little-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px;
+    border-radius: 16px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Light card */
+.light .little-section {
+    background-color: #ffffff;
+    border-color: #e0e0e0;
+    color: #111111;
+}
+
+/* Dark card */
+.dark .little-section {
+    background-color: #1a1a1a;
+    border-color: #2a2a2a;
+    color: #ffffff;
+}
+
+/* Card hover - light */
+.light .little-section:hover {
+    border-color: #C71585;
+    box-shadow: 0 4px 24px #C71585;
+    transform: translateY(-4px);
+}
+
+/* Card hover - dark */
+.dark .little-section:hover {
+    border-color: #C71585;
+    box-shadow: 0 4px 24px #C71585;
+    transform: translateY(-4px);
+}
+
+/* Icon box */
+.icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    background-color: #C71585;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+/* Card title */
+.cardTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* Card description */
+.cardDesc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.75;
+}
+
+/* Span tags */
+.span-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.span-section span {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    border: 1px solid #C71585;
+    color: #C71585;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+/* Span hover */
+.little-section:hover .span-section span {
+    background-color: #C71585;
+    color: #ffffff;
+}
+
+/* Responsive - tablet */
+@media (max-width: 768px) {
+    .section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsive - mobile */
+@media (max-width: 480px) {
+    .section {
+        grid-template-columns: 1fr;
+    }
+
+    .wrapper {
+        padding: 40px 20px;
+    }
+}
