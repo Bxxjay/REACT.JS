@@ -24,8 +24,8 @@ export default function Navbar({ darkMode, setDarkMode }) {
           <div className="flex lg:flex-1">
             <a href="#home">
               <img
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg"
-                className={`h-8 w-auto ${darkMode ? "invert" : "brightness-0"}`}
+                src="images/Braids 'n' More.png"
+                className="h-8 w-auto"
                 alt="logo"
               />
             </a>
@@ -183,10 +183,10 @@ export default function Navbar({ darkMode, setDarkMode }) {
             {/* Top text */}
             <div className="text-center -mt-42">
               <h1 className="text-5xl font-semibold sm:text-7xl">
-                Data to enrich your online business
+                Welcome to Braids 'n' More
               </h1>
               <p className="mt-6 text-gray-400">
-                Clean UI. Smooth experience. Scalable design.
+                We offer the best braiding and hairstyling services in Christchurch.
               </p>
             </div>
 

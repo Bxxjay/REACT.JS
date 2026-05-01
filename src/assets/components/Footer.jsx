@@ -6,19 +6,19 @@ export default function Footer() {
 
       <aside className="flex flex-col gap-2">
         <img
-          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg"
-          className="h-12 w-auto brightness-100 invert"
+          src="images/Braids 'n' More.png"
+          className="h-12 w-auto object-contain mx-auto"
           alt="logo"
         />
         <p>
-          ACME Industries Ltd.
+          &copy; {new Date().getFullYear()} Braids 'n' More
           <br />
-          Providing reliable tech since 1992
+          Providing reliable hair services since 2019
         </p>
       </aside>
 
       <nav className="flex flex-col gap-3">
-        <h6 className="font-bold uppercase text-sm tracking-widest">Social</h6>
+        <h6 className="font-bold uppercase text-sm tracking-widest"> Reach Out To Us</h6>
         <div className="flex flex-row items-center gap-4">
 
           <a href="https://snapchat.com/add/yourusername" target="_blank" rel="noopener noreferrer"
