@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { id: 1, name: 'Transactions every 24 hours', value: 44000000, display: 'million', prefix: '', suffix: ' million' },
-  { id: 2, name: 'Assets under holding', value: 119, display: 'trillion', prefix: '$', suffix: ' trillion' },
-  { id: 3, name: 'New users annually', value: 46000, display: '', prefix: '', suffix: '' },
+  { id: 1, name: 'Average rating from clients', value: 4.8, display: '+', prefix: '', suffix: '+' },
+  { id: 2, name: 'Clients served', value: 500, display: '+', prefix: '', suffix: '+' },
+  { id: 3, name: 'New clients weekly', value: 12, display: '', prefix: '', suffix: '' },
 ];
 
 function CountUp({ target, prefix, suffix, darkMode }) {

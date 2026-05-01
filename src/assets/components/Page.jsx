@@ -4,11 +4,13 @@ import emailjs from "@emailjs/browser";
 
 const SERVICE_ID = "service_ng44zk3";
 const TEMPLATE_ID = "template_wcbpr5c";
+const AUTOREPLY_TEMPLATE_ID = "template_6ce82ku";
 const PUBLIC_KEY = "LlsDzZmobiJ5An_0W";
 
 export default function Contact({ darkMode, selectedService }) {
   const formRef = useRef();
   const [status, setStatus] = useState("idle");
+  const [homeService, setHomeService] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -19,6 +21,7 @@ export default function Contact({ darkMode, selectedService }) {
     date: "",
     time: "",
     message: "",
+    address: "",
   });
 
   useEffect(() => {
@@ -43,49 +46,100 @@ export default function Contact({ darkMode, selectedService }) {
       : ["10:00 AM – 12:00 PM", "12:00 PM – 2:00 PM", "2:00 PM – 4:00 PM", "4:00 PM – 6:00 PM"];
   };
 
-  const handleSubmit = (e) => {
-  e.preventDefault();
-  setStatus("sending");
+  const isFormValid =
+    formData.firstName.trim() !== "" &&
+    formData.lastName.trim() !== "" &&
+    formData.email.trim() !== "" &&
+    formData.phone.trim() !== "" &&
+    formData.hairstyle.trim() !== "" &&
+    formData.date !== "" &&
+    formData.time !== "" &&
+    (!homeService || formData.address.trim() !== "");
 
-  emailjs.send(
-    SERVICE_ID,
-    TEMPLATE_ID,
-    {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      phone: formData.phone,
-      hairstyle: formData.hairstyle,
-      date: formData.date,
-      time: formData.time,
-      message: formData.message,
-    },
-    PUBLIC_KEY
-  )
-  .then(() => {
-    setStatus("success");
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      hairstyle: "",
-      date: "",
-      time: "",
-      message: "",
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isFormValid) return;
+    setStatus("sending");
+
+    // Send notification to owner
+    emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        hairstyle: formData.hairstyle,
+        date: formData.date,
+        time: formData.time,
+        message: formData.message,
+        address: homeService ? formData.address : "Not requested",
+      },
+      PUBLIC_KEY
+    )
+    .then(() => {
+      // Send auto-reply to customer
+      return emailjs.send(
+        SERVICE_ID,
+        AUTOREPLY_TEMPLATE_ID,
+        {
+          firstName: formData.firstName,
+          email: formData.email,
+          hairstyle: formData.hairstyle,
+          date: formData.date,
+          time: formData.time,
+          address: homeService ? formData.address : "Not requested",
+        },
+        PUBLIC_KEY
+      );
+    })
+    .then(() => {
+      setStatus("success");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        hairstyle: "",
+        date: "",
+        time: "",
+        message: "",
+        address: "",
+      });
+      setHomeService(false);
+    })
+    .catch((error) => {
+      console.error("EmailJS error:", error);
+      setStatus("error");
     });
-  })
-  .catch((error) => {
-    console.error("EmailJS error:", error);
-    setStatus("error");
-  });
-};
+  };
 
   const socials = [
-    { icon: <FaSnapchat size={20} />, label: "Snapchat", handle: "yourhandle" },
-    { icon: <FaInstagram size={20} />, label: "Instagram", handle: "yourhandle" },
-    { icon: <FaFacebook size={20} />, label: "Facebook", handle: "yourhandle" },
-    { icon: <FaWhatsapp size={20} />, label: "Whatsapp", handle: "+234 000 0000 000" },
+    {
+      icon: <FaSnapchat size={20} />,
+      label: "Snapchat",
+      handle: "Braids 'n' More",
+      href: "https://www.snapchat.com/add/braidsnmore",
+    },
+    {
+      icon: <FaInstagram size={20} />,
+      label: "Instagram",
+      handle: "Braids 'n' More",
+      href: "https://www.instagram.com/braidsnmore",
+    },
+    {
+      icon: <FaFacebook size={20} />,
+      label: "Facebook",
+      handle: "Braids 'n' More",
+      href: "https://www.facebook.com/braidsnmore",
+    },
+    {
+      icon: <FaWhatsapp size={20} />,
+      label: "Whatsapp",
+      handle: "Braids 'n' More",
+      href: "https://wa.me/2340000000000",
+    },
   ];
 
   const inputClass = `px-4 py-3 rounded-lg border text-sm outline-none focus:border-pink-500 transition-colors duration-300 ${
@@ -122,8 +176,14 @@ export default function Contact({ darkMode, selectedService }) {
           {/* Socials */}
           <div className="flex flex-col gap-4">
             {socials.map((social, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center border transition-colors duration-300 ${
+              <a
+                key={index}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 group"
+              >
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center border transition-colors duration-300 group-hover:border-pink-500 group-hover:text-pink-400 ${
                   darkMode
                     ? "border-gray-700 text-pink-400 bg-gray-900"
                     : "border-gray-300 text-pink-500 bg-white"
@@ -134,9 +194,11 @@ export default function Contact({ darkMode, selectedService }) {
                   <p className={`text-xs ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
                     {social.label}
                   </p>
-                  <p className="text-sm font-semibold">{social.handle}</p>
+                  <p className="text-sm font-semibold group-hover:text-pink-500 transition-colors duration-200">
+                    {social.handle}
+                  </p>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -232,8 +294,6 @@ export default function Contact({ darkMode, selectedService }) {
 
             {/* Date and Time */}
             <div className="grid grid-cols-2 gap-4">
-
-              {/* Date */}
               <div className="flex flex-col gap-1">
                 <label className={`text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
                   Preferred Date <span className="text-pink-500">*</span>
@@ -250,8 +310,6 @@ export default function Contact({ darkMode, selectedService }) {
                   className={inputClass}
                 />
               </div>
-
-              {/* Time */}
               <div className="flex flex-col gap-1">
                 <label className={`text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
                   Preferred Time <span className="text-pink-500">*</span>
@@ -274,8 +332,50 @@ export default function Contact({ darkMode, selectedService }) {
                   ))}
                 </select>
               </div>
-
             </div>
+
+            {/* Home Service Toggle */}
+            <div className="flex items-center justify-between">
+              <div>
+                <p className={`text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
+                  Home Service
+                </p>
+                <p className={`text-xs ${darkMode ? "text-gray-500" : "text-gray-400"}`}>
+                  Want us to come to you?
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setHomeService(!homeService)}
+                className={`relative w-12 h-6 rounded-full transition-colors duration-300 focus:outline-none ${
+                  homeService ? "bg-pink-500" : darkMode ? "bg-gray-700" : "bg-gray-300"
+                }`}
+              >
+                <span
+                  className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform duration-300 ${
+                    homeService ? "translate-x-6" : "translate-x-0"
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Address - shows when home service is on */}
+            {homeService && (
+              <div className="flex flex-col gap-1">
+                <label className={`text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
+                  Address <span className="text-pink-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Enter your full address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  required={homeService}
+                  className={inputClass}
+                />
+              </div>
+            )}
 
             {/* Message */}
             <div className="flex flex-col gap-1">
@@ -295,8 +395,12 @@ export default function Contact({ darkMode, selectedService }) {
             {/* Submit */}
             <button
               type="submit"
-              disabled={status === "sending"}
-              className="w-full py-4 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-semibold text-base transition-colors duration-300 mt-2 disabled:opacity-60"
+              disabled={status === "sending" || !isFormValid}
+              className={`w-full py-4 rounded-full text-white font-semibold text-base transition-all duration-300 mt-2 ${
+                isFormValid
+                  ? "bg-pink-500 hover:bg-pink-600 cursor-pointer"
+                  : "bg-pink-300 cursor-not-allowed opacity-50"
+              }`}
             >
               {status === "sending" ? "Sending..." : "Book Appointment →"}
             </button>

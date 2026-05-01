@@ -10,6 +10,8 @@ import About from "../src/assets/components/About";
 import Products from "../src/assets/components/Services";
 import Page from "../src/assets/components/Page";
 import FAQSection from "../src/assets/components/FAQ";
+import Reviews from "../src/assets/components/Reviews";
+
 export default function Home() {
   const [darkMode, setDarkMode] = useState(true);
   const [selectedService, setSelectedService] = useState(null);
@@ -25,18 +27,30 @@ export default function Home() {
 
   return (
     <>
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+      <div id="home">
+        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+      </div>
       <Example darkMode={darkMode} />
+      <Reviews darkMode={darkMode} />
       <CursorMaskReveal
-  foregroundImage={`${import.meta.env.BASE_URL}images/abhishek-ravi-qi2-ePRjgGw-unsplash.jpg`}
-  backgroundImage={`${import.meta.env.BASE_URL}images/wolfgang-hasselmann-lLemmyQyC_w-unsplash.jpg`}
-  overlayColor="rgba(0,0,0,0.6)"
-  maskSize={350}
-/>
-      <About darkMode={darkMode} />
-      <Products darkMode={darkMode} onSelectService={setSelectedService}/>
-      <CarouselSection darkMode={darkMode} />
-      <Page darkMode={darkMode} selectedService={selectedService} />
+        foregroundImage={`${import.meta.env.BASE_URL}images/abhishek-ravi-qi2-ePRjgGw-unsplash.jpg`}
+        backgroundImage={`${import.meta.env.BASE_URL}images/wolfgang-hasselmann-lLemmyQyC_w-unsplash.jpg`}
+        overlayColor="rgba(0,0,0,0.6)"
+        maskSize={450}
+        darkMode={darkMode}
+      />
+      <div id="about">
+        <About darkMode={darkMode} />
+      </div>
+      <div id="services">
+        <Products darkMode={darkMode} onSelectService={setSelectedService} />
+      </div>
+      <div id="pastservices">
+        <CarouselSection darkMode={darkMode} />
+      </div>
+      <div id="page">
+        <Page darkMode={darkMode} selectedService={selectedService} />
+      </div>
       <BackToTop />
       <CookieConsent />
       <FAQSection darkMode={darkMode} />

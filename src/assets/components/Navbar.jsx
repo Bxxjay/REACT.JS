@@ -1,15 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'About Us', href: '/' },
+  { name: 'Home', href: '#home' },
+  { name: 'About Us', href: '#about' },
   { name: 'Services', href: '#' },
-  { name: 'Book An Appointment', href: '/' },
+  { name: 'Book An Appointment', href: '#page' },
 ]
 
 export default function Navbar({ darkMode, setDarkMode }) {
@@ -23,20 +22,22 @@ export default function Navbar({ darkMode, setDarkMode }) {
 
           {/* LOGO */}
           <div className="flex lg:flex-1">
-            <Link to="/">
+            <a href="#home">
               <img
                 src="https://tailwindcss.com/plus-assets/img/logos/mark.svg"
                 className={`h-8 w-auto ${darkMode ? "invert" : "brightness-0"}`}
                 alt="logo"
               />
-            </Link>
+            </a>
           </div>
 
-          {/* MOBILE BUTTON */}
+          {/* MOBILE BUTTON - only shows when menu is closed */}
           <div className="flex lg:hidden">
-            <button onClick={() => setMobileMenuOpen(true)}>
-              <Bars3Icon className={`h-6 w-6 ${darkMode ? "text-white" : "text-black"}`} />
-            </button>
+            {!mobileMenuOpen && (
+              <button onClick={() => setMobileMenuOpen(true)}>
+                <Bars3Icon className={`h-6 w-6 ${darkMode ? "text-white" : "text-black"}`} />
+              </button>
+            )}
           </div>
 
           {/* NAV */}
@@ -61,24 +62,36 @@ export default function Navbar({ darkMode, setDarkMode }) {
                     <div className={`rounded-lg shadow-lg p-4 space-y-2 transition-all duration-300 ${
                       servicesOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
                     } ${darkMode ? "bg-black text-white" : "bg-white text-black"}`}>
-                      <Link to="/works" className="block hover:text-pink-500 transition-colors duration-200">Previous Works</Link>
-                      <Link to="/hairstyles" className="block hover:text-pink-500 transition-colors duration-200">Hairstyles</Link>
+                      
+                      <a  href="#pastservices"
+                        className="block hover:text-pink-500 transition-colors duration-200"
+                        onClick={() => setServicesOpen(false)}
+                      >
+                        Previous Works
+                      </a>
+                      
+                      <a  href="#services"
+                        className="block hover:text-pink-500 transition-colors duration-200"
+                        onClick={() => setServicesOpen(false)}
+                      >
+                        Hairstyles
+                      </a>
                     </div>
                   </div>
                 </div>
               ) : (
-                <Link
+                <a
                   key={item.name}
-                  to={item.href}
+                  href={item.href}
                   className={`font-semibold hover:text-pink-500 transition-colors duration-200 ${darkMode ? "text-white" : "text-black"}`}
                 >
                   {item.name}
-                </Link>
+                </a>
               )
             )}
           </div>
 
-          {/* THEME TOGGLE */}
+          {/* THEME TOGGLE - desktop */}
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <button onClick={() => setDarkMode(!darkMode)}>
               {darkMode ? (
@@ -95,8 +108,20 @@ export default function Navbar({ darkMode, setDarkMode }) {
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
           <Dialog.Panel className={`fixed inset-y-0 right-0 w-full p-6 ${darkMode ? "bg-black text-white" : "bg-white text-black"}`}>
 
-            <div className="flex justify-between items-center">
-              <span>Menu</span>
+            <div className="flex items-center justify-between">
+              {/* LEFT - spacer */}
+              <div className="w-6" />
+
+              {/* MIDDLE - theme toggle */}
+              <button onClick={() => setDarkMode(!darkMode)}>
+                {darkMode ? (
+                  <SunIcon className={`h-6 w-6 ${darkMode ? "text-white" : "text-black"} hover:text-pink-500 transition-colors duration-200`} />
+                ) : (
+                  <MoonIcon className={`h-6 w-6 ${darkMode ? "text-white" : "text-black"} hover:text-pink-500 transition-colors duration-200`} />
+                )}
+              </button>
+
+              {/* RIGHT - close button */}
               <button onClick={() => setMobileMenuOpen(false)}>
                 <XMarkIcon className={`h-6 w-6 ${darkMode ? "text-white" : "text-black"}`} />
               </button>
@@ -115,66 +140,68 @@ export default function Navbar({ darkMode, setDarkMode }) {
 
                     {servicesOpen && (
                       <div className="ml-4 mt-2 space-y-2">
-                        <Link to="/works" className={`block hover:text-pink-500 transition-colors duration-200 ${darkMode ? "text-white" : "text-black"}`}>Previous Works</Link>
-                        <Link to="/booking" className={`block hover:text-pink-500 transition-colors duration-200 ${darkMode ? "text-white" : "text-black"}`}>Book Appointment</Link>
-                        <Link to="/hairstyles" className={`block hover:text-pink-500 transition-colors duration-200 ${darkMode ? "text-white" : "text-black"}`}>Hairstyles</Link>
+                        
+                        <a href="#pastservices"
+                          onClick={() => { setServicesOpen(false); setMobileMenuOpen(false) }}
+                          className={`block hover:text-pink-500 transition-colors duration-200 ${darkMode ? "text-white" : "text-black"}`}
+                        >
+                          Previous Works
+                        </a>
+                        
+                        <a href="#services"
+                          onClick={() => { setServicesOpen(false); setMobileMenuOpen(false) }}
+                          className={`block hover:text-pink-500 transition-colors duration-200 ${darkMode ? "text-white" : "text-black"}`}
+                        >
+                          Hairstyles
+                        </a>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <Link
+                  <a
                     key={item.name}
-                    to={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
                     className={`block hover:text-pink-500 transition-colors duration-200 ${darkMode ? "text-white" : "text-black"}`}
                   >
                     {item.name}
-                  </Link>
+                  </a>
                 )
               )}
-
-              {/* THEME TOGGLE IN MOBILE */}
-              <button
-                onClick={() => setDarkMode(!darkMode)}
-                className={`mt-6 hover:text-pink-500 transition-colors duration-200 ${darkMode ? "text-white" : "text-black"}`}
-              >
-                Change Theme
-              </button>
             </div>
 
           </Dialog.Panel>
         </Dialog>
       </header>
 
-     {/* HERO */}
-<div className="relative min-h-screen bg-[url('/images/microsoft-copilot-71ig274jGpw-unsplash.jpg')] bg-cover bg-center">
-  <div className='absolute inset-0 bg-black/50'></div>
-  <div className="relative px-6 pt-24 pb-16 flex flex-col items-center min-h-screen text-white">
+      {/* HERO */}
+      <div className="relative min-h-screen bg-[url('/images/hairstyle.jpg')] bg-cover bg-center">
+        <div className='absolute inset-0 bg-black/50'></div>
+        <div className="relative px-6 pt-24 pb-16 flex flex-col items-center min-h-screen text-white">
+          <div className="relative px-6 pt-24 pb-16 flex flex-col items-center justify-center min-h-screen text-white gap-16">
 
-    <div className="relative px-6 pt-24 pb-16 flex flex-col items-center justify-center min-h-screen text-white gap-16">
+            {/* Top text */}
+            <div className="text-center -mt-42">
+              <h1 className="text-5xl font-semibold sm:text-7xl">
+                Data to enrich your online business
+              </h1>
+              <p className="mt-6 text-gray-400">
+                Clean UI. Smooth experience. Scalable design.
+              </p>
+            </div>
 
-  {/* Top text */}
-  <div className="text-center -mt-42">
-    <h1 className="text-5xl font-semibold sm:text-7xl">
-      Data to enrich your online business
-    </h1>
-    <p className="mt-6 text-gray-400">
-      Clean UI. Smooth experience. Scalable design.
-    </p>
-  </div>
+            {/* Bottom button */}
+            <div className="absolute bottom-26">
+              <a href="#page">
+                <button className="bg-white text-pink-500 font-semibold px-8 py-4 rounded-full hover:bg-pink-50 hover:scale-105 transition-all duration-300 shadow-lg text-base">
+                  Book Us Now →
+                </button>
+              </a>
+            </div>
 
-  {/* Bottom button */}
-  <div className="absolute bottom-26">
-    <Link to="/booking">
-      <button className="bg-white text-pink-500 font-semibold px-8 py-4 rounded-full hover:bg-pink-50 hover:scale-105 transition-all duration-300 shadow-lg text-base">
-        Book Us Now →
-      </button>
-    </Link>
-  </div>
-
-  </div>
-
-  </div>
-</div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

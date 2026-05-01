@@ -9,12 +9,12 @@ const faqs = [
   {
     id: 2,
     question: "What hair services do you offer?",
-    answer: "We offer a wide range of services including haircuts, braiding, weaves, hair treatments, colouring, styling, and more. Check our Services page for the full list.",
+    answer: "We offer a wide range of services including braiding, weaves, hair treatments, colouring, styling, and more. Check our Services page for the full list and you could tell us whatever you want that is not in the page in the message section.",
   },
   {
     id: 3,
     question: "How long does a typical appointment take?",
-    answer: "It depends on the service. A simple trim can take 30 minutes while braiding or weaves can take 2–4 hours. We'll give you an estimated time when you book.",
+    answer: "It depends on the service but most of our services gets rendered within the two hours time frame we set",
   },
   {
     id: 4,
@@ -29,8 +29,19 @@ const faqs = [
   {
     id: 6,
     question: "Can I cancel or reschedule my appointment?",
-    answer: "Yes, you can cancel or reschedule up to 24 hours before your appointment. Please contact us via WhatsApp or Instagram to make changes.",
+    answer: "Yes, you can cancel or reschedule up to 24 hours before your appointment. Please contact us via WhatsApp or Instagram or reply to your confirmation mail to make changes.",
   },
+  {
+    id:7,
+    question: "How do i make payment?",
+    answer: "After booking we will reach out to you via Whatsapp or Email for you to make payment online. You can make payment offline at our studio or at your location (Home Service)"
+  },
+  {
+    id:8,
+    question: "Can i make payment after service is rendered?",
+    answer: "Half or Full Payment must be made before we render our service"
+
+  }
 ];
 
 function FAQItem({ faq, isOpen, onToggle, darkMode }) {

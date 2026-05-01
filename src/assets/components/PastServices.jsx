@@ -63,7 +63,7 @@ export default function CarouselSection({ darkMode }) {
 
           {/* Text */}
           <div className="w-full md:w-2/5 flex flex-col justify-center gap-4">
-            <h2 className="text-3xl font-bold">Where Every Cut Tells a Story</h2>
+            <h2 className="text-3xl font-bold">Where Every Hair Tells a Story</h2>
             <p className="text-base leading-relaxed opacity-80">
               At our studio, we believe that great hair is more than just a style —
               it's an expression of who you are. Our skilled stylists bring years of

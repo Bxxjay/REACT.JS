@@ -7,6 +7,7 @@ export default function CursorMaskReveal({
   backgroundImage = `${BASE}images/background.jpg`,
   overlayColor = "rgba(0,0,0,0.6)",
   maskSize = 200,
+  darkMode
 }) {
   const canvasRef = useRef(null);
   const posRef = useRef({ x: -9999, y: -9999 });
@@ -84,7 +85,22 @@ export default function CursorMaskReveal({
     };
   };
 
-  return (
+    return (
+  <>
+    <div style={{ background: darkMode ? "#000000" : "#ffffff", padding: "2rem 0 0" }}>
+      <h1
+        style={{
+          fontSize: "3.5rem",
+          fontWeight: "bold",
+          textAlign: "center",
+          color: "#ec4899",
+          width: "100%",
+          margin: "0",
+        }}
+      >
+        Meet The CEO
+      </h1>
+    </div>
     <div
       className="relative w-full cursor-none"
       style={{ height: "100vh" }}
@@ -95,5 +111,6 @@ export default function CursorMaskReveal({
     >
       <canvas ref={canvasRef} className="w-full h-full block" />
     </div>
-  );
+  </>
+);
 }
